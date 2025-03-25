@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Mode Star Catcher Game</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #121212;
+            color: #ffffff;
+            flex-direction: column;
+        }
+
+        #menu {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #gameArea {
+            position: relative;
+            width: 600px;
+            height: 400px;
+            border: 2px solid #ffffff;
+            overflow: hidden;
+            background-color: #1e1e1e;
+            display: none; /* Hide game area initially */
+        }
+
+        #player {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: #2196F3;
+            border-radius: 50%;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .star {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .star.green {
+            background-color: #ffeb3b;
+        }
+
+        .star.red {
+            background-color: #f44336;
+        }
+
+        #score, #lives {
+            position: absolute;
+            top: 10px;
+            font-size: 20px;
+            color: #ffffff;
+        }
+
+        #lives {
+            right: 10px;
+        }
+
+        #startButton {
+            padding: 10px 20px;
+            font-size: 20px;
+            background-color: #2196F3;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #startButton:hover {
+            background-color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div id="menu">
+        <h1>Star Catcher Game</h1>
+        <button id="startButton">Start Game</button>
+    </div>
+    <div id="gameArea">
+        <div id="player"></div>
+        <div id="score">Score: 0</div>
+        <div id="lives">Lives: 3</div>
+    </div>
+    <script>
+        const gameArea = document.getElementById('gameArea');
+        const player = document.getElementById('player');
+        const scoreDisplay = document.getElementById('score');
+        const livesDisplay = document.getElementById('lives');
+        const startButton = document.getElementById('startButton');
+        const menu = document.getElementById('menu');
+
+        let score = 0;
+        let lives = 3;
+        let playerPosition = gameArea.clientWidth / 2 - 15;
+        let gameInterval;
+
+        function updatePlayerPosition() {
+            player.style.left = `${playerPosition}px`;
+        }
+
+        function createStar() {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            star.classList.add(Math.random() < 0.5 ? 'green' : 'red');
+            star.style.left = `${Math.random() * (gameArea.clientWidth - 20)}px`;
+            star.style.top = '0px';
+            gameArea.appendChild(star);
+            moveStar(star);
+        }
+
+        function moveStar(star) {
+            const interval = setInterval(() => {
+                const starTop = parseFloat(star.style.top);
+                if (starTop < gameArea.clientHeight) {
+                    star.style.top = `${starTop + 4}px`; // Increased speed
+                } else {
+                    clearInterval(interval);
+                    gameArea.removeChild(star);
+                }
+
+                if (isCollision(player, star)) {
+                    clearInterval(interval);
+                    gameArea.removeChild(star);
+                    if (star.classList.contains('red')) {
+                        lives--;
+                        if (lives <= 0) {
+                            alert('Game Over! Your score: ' + score);
+                            resetGame();
+                        }
+                    } else {
+                        score++;
+                    }
+                    updateScoreAndLives();
+                }
+            }, 20);
+        }
+
+        function isCollision(player, star) {
+            const playerRect = player.getBoundingClientRect();
+            const starRect = star.getBoundingClientRect();
+            return ! (
+                playerRect.right < starRect.left ||
+                playerRect.left > starRect.right ||
+                playerRect.bottom < starRect.top ||
+                playerRect.top > starRect.bottom
+            );
+        }
+
+        function updateScoreAndLives() {
+            scoreDisplay.textContent = 'Score: ' + score;
+            livesDisplay.textContent = 'Lives: ' + lives;
+        }
+
+        function resetGame() {
+            score = 0;
+            lives = 3;
+            updateScoreAndLives();
+            const stars = document.querySelectorAll('.star');
+            stars.forEach(star => gameArea.removeChild(star));
+            menu.style.display = 'flex'; // Show menu again
+            gameArea.style.display = 'none'; // Hide game area
+            clearInterval(gameInterval); // Stop the game loop
+        }
+
+        startButton.addEventListener('click', () => {
+            menu.style.display = 'none'; // Hide menu
+            gameArea.style.display = 'block'; // Show game area
+            gameInterval = setInterval(createStar, 1000); // Start creating stars
+        });
+
+        document.addEventListener('mousemove', (event) => {
+            const rect = gameArea.getBoundingClientRect();
+            playerPosition = event.clientX - rect.left - 15; // Center the circle
+            playerPosition = Math.max(0, Math.min(playerPosition, gameArea.clientWidth - 30));
+            updatePlayerPosition();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft') {
+                playerPosition -= 15;
+                playerPosition = Math.max(0, playerPosition);
+                updatePlayerPosition();
+            } else if (event.key === 'ArrowRight') {
+                playerPosition += 15;
+                playerPosition = Math.min(gameArea.clientWidth - 30, playerPosition);
+                updatePlayerPosition();
+            }
+        });
+    </script>
+</body>
+</html>
