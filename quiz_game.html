@@ -3,182 +3,198 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programming & HCI Quiz Game</title>
+    <title>Interactive Quiz Game</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            color: #333;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-
-        .container {
-            background: white;
-            padding: 40px; /* Increased padding */
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 400px; /* Increased width */
             text-align: center;
+            margin: 50px;
         }
-
-        h1 {
-            margin-bottom: 20px;
-            font-size: 24px; /* Increased font size */
+        .quiz-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid #333;
+            border-radius: 10px;
+            box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
         }
-
-        #options {
-            margin: 20px 0;
+        .question {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            min-height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        button {
-            background-color: #28a745;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px; /* Increased font size */
-        }
-
-        button:hover {
-            background-color: #218838;
-        }
-
-        .hidden {
-            display: none;
-        }
-
         .option {
-            background-color: #007bff;
-            color: white;
+            display: block;
+            width: 100%;
             padding: 10px;
-            margin: 5px 0;
+            margin: 8px 0;
+            border: 1px solid #444;
             border-radius: 5px;
             cursor: pointer;
-            font-size: 16px; /* Increased font size */
+            transition: background 0.3s;
         }
-
         .option:hover {
-            background-color: #0056b3;
+            background-color: #ddd;
         }
-
-        .feedback {
-            margin: 10px 0;
-            font-weight: bold;
-            font-size: 18px; /* Increased font size */
+        .correct {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .wrong {
+            background-color: #F44336;
+            color: white;
+        }
+        #options {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Programming & HCI Quiz Game</h1>
-        <div id="quiz-container">
-            <div id="question"></div>
+    <div class="quiz-container">
+        <h2>Interactive Quiz Game - Human Computer Interaction</h2>
+        <div id="question-container">
+            <p class="question" id="question">Loading...</p>
             <div id="options"></div>
-            <div id="feedback" class="feedback"></div>
-            <button id="next-button" class="hidden">Next Question</button>
         </div>
-        <div id="score-container" class="hidden">
-            <h2>Your Score: <span id="score"></span></h2>
-            <button id="restart-button">Restart Quiz</button>
-        </div>
+        <p id="feedback"></p>
+        <p>Score: <span id="score">0</span></p>
+        <button onclick="nextQuestion()">Next</button>
     </div>
-    <script>
-        const questions = [
-            {
-                question: "What does HTML stand for?",
-                options: ["Hyper Text Markup Language", "High Text Markup Language", "Hyper Tabular Markup Language", "None of these"],
-                answer: 0
-            },
-            {
-                question: "Which of the following is a programming language?",
-                options: ["HTML", "CSS", "JavaScript", "All of the above"],
-                answer: 2
-            },
-            {
-                question: "What is the main purpose of HCI?",
-                options: ["To improve user experience", "To create software", "To design hardware", "None of the above"],
-                answer: 0
-            },
-            {
-                question: "Which of the following is a front-end framework?",
-                options: ["Django", "Flask", "React", "Node.js"],
-                answer: 2
-            },
-            {
-                question: "What does CSS stand for?",
-                options: ["Cascading Style Sheets", "Creative Style Sheets", "Computer Style Sheets", "Colorful Style Sheets"],
-                answer: 0
-            }
-        ];
 
+    <script>
+        const quizData = {
+            easy: [
+                {
+                    question: "What does HCI stand for?",
+                    options: ["Human Computer Interface", "Human Computer Interaction", "Hardware Computer Interaction", "High-level Computing Interface"],
+                    answer: "Human Computer Interaction"
+                },
+                {
+                    question: "Which of the following is a goal of HCI?",
+                    options: ["Efficiency", "Complexity", "Confusion", "Slow response"],
+                    answer: "Efficiency"
+                },
+                {
+                    question: "What is usability in HCI?",
+                    options: ["How difficult a system is to use", "How easily users can accomplish tasks", "The number of colors in an interface", "None of the above"],
+                    answer: "How easily users can accomplish tasks"
+                },
+                {
+                    question: "Which device is NOT an input device in HCI?",
+                    options: ["Keyboard", "Mouse", "Monitor", "Touchscreen"],
+                    answer: "Monitor"
+                },
+                {
+                    question: "What is the primary focus of HCI?",
+                    options: ["How users interact with computers", "How computers work internally", "How fast a computer processes data", "How many applications are installed"],
+                    answer: "How users interact with computers"
+                }
+            ],
+            difficult: [
+                {
+                    question: "Which model describes user interaction with a system?",
+                    options: ["Waterfall Model", "GOMS Model", "Agile Model", "Cloud Model"],
+                    answer: "GOMS Model"
+                },
+                {
+                    question: "What is a heuristic evaluation?",
+                    options: ["A programming technique", "A usability inspection method", "A data storage method", "A cryptographic technique"],
+                    answer: "A usability inspection method"
+                },
+                {
+                    question: "What is Fitts' Law used for in HCI?",
+                    options: ["Measuring CPU speed", "Predicting human movement", "Encrypting passwords", "Designing network security"],
+                    answer: "Predicting human movement"
+                },
+                {
+                    question: "What does cognitive load refer to in HCI?",
+                    options: ["The weight of a laptop", "The number of processes a CPU can handle", "The amount of mental effort required to use a system", "The speed of an internet connection"],
+                    answer: "The amount of mental effort required to use a system"
+                },
+                {
+                    question: "Which field contributes to HCI research?",
+                    options: ["Psychology", "Design", "Computer Science", "All of the above"],
+                    answer: "All of the above"
+                }
+            ]
+        };
+
+        let currentQuestions = [];
         let currentQuestionIndex = 0;
         let score = 0;
+        let easyCompleted = false;
 
-        const questionElement = document.getElementById('question');
-        const optionsElement = document.getElementById('options');
-        const feedbackElement = document.getElementById('feedback');
-        const nextButton = document.getElementById('next-button');
-        const scoreContainer = document.getElementById('score-container');
-        const scoreElement = document.getElementById('score');
-        const restartButton = document.getElementById('restart-button');
-
-        function startGame() {
-            currentQuestionIndex = 0;
+        function startQuiz() {
             score = 0;
-            nextButton.classList.add('hidden');
-            scoreContainer.classList.add('hidden');
- feedbackElement.innerText = '';
-            showQuestion(questions[currentQuestionIndex]);
+            easyCompleted = false;
+            loadEasyQuestions();
         }
 
-        function showQuestion(question) {
-            questionElement.innerText = question.question;
-            optionsElement.innerHTML = '';
-            feedbackElement.innerText = '';
-            question.options.forEach((option, index) => {
-                const button = document.createElement('div');
-                button.innerText = option;
-                button.classList.add('option');
-                button.addEventListener('click', () => selectOption(index));
-                optionsElement.appendChild(button);
-            });
+        function loadEasyQuestions() {
+            currentQuestions = quizData.easy.sort(() => 0.5 - Math.random()).slice(0, 5);
+            currentQuestionIndex = 0;
+            loadQuestion();
         }
 
-        function selectOption(index) {
-            const question = questions[currentQuestionIndex];
-            if (index === question.answer) {
+        function loadDifficultQuestions() {
+            currentQuestions = quizData.difficult.sort(() => 0.5 - Math.random()).slice(0, 5);
+            currentQuestionIndex = 0;
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            if (currentQuestionIndex < currentQuestions.length) {
+                const questionData = currentQuestions[currentQuestionIndex];
+                document.getElementById("question").textContent = questionData.question;
+                const optionsContainer = document.getElementById("options");
+                optionsContainer.innerHTML = "";
+                questionData.options.forEach(option => {
+                    const btn = document.createElement("button");
+                    btn.textContent = option;
+                    btn.classList.add("option");
+                    btn.onclick = () => checkAnswer(option, questionData.answer, btn);
+                    optionsContainer.appendChild(btn);
+                });
+            } else {
+                if (!easyCompleted) {
+                    if (score === 5) {
+                        easyCompleted = true;
+                        loadDifficultQuestions();
+                    } else {
+                        alert("You need to answer all easy questions correctly before moving to difficult ones.");
+                        startQuiz();
+                    }
+                } else {
+                    alert("Quiz completed! Your final score: " + score);
+                    startQuiz();
+                }
+            }
+        }
+
+        function checkAnswer(selected, correct, button) {
+            if (selected === correct) {
                 score++;
-                feedbackElement.innerText = "Correct!";
+                document.getElementById("score").textContent = score;
+                button.classList.add("correct");
+                setTimeout(() => {
+                    currentQuestionIndex++;
+                    loadQuestion();
+                }, 1000);
             } else {
-                feedbackElement.innerText = "Wrong! The correct answer is: " + question.options[question.answer];
+                button.classList.add("wrong");
+                setTimeout(() => {
+                    button.classList.remove("wrong");
+                }, 1000);
+                alert("Wrong answer. Try again!");
             }
-            nextButton.classList.remove('hidden');
         }
 
-        nextButton.addEventListener('click', () => {
-            currentQuestionIndex++;
-            if (currentQuestionIndex < questions.length) {
-                showQuestion(questions[currentQuestionIndex]);
-                nextButton.classList.add('hidden');
-            } else {
-                showScore();
-            }
-        });
-
-        function showScore() {
-            scoreElement.innerText = score;
-            scoreContainer.classList.remove('hidden');
-            document.getElementById('quiz-container').classList.add('hidden');
-        }
-
-        restartButton.addEventListener('click', startGame);
-
-        startGame();
+        startQuiz();
     </script>
 </body>
 </html>
