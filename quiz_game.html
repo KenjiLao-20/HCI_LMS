@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programming & HCI Quiz Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 40px; /* Increased padding */
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 400px; /* Increased width */
+            text-align: center;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            font-size: 24px; /* Increased font size */
+        }
+
+        #options {
+            margin: 20px 0;
+        }
+
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px; /* Increased font size */
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .option {
+            background-color: #007bff;
+            color: white;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px; /* Increased font size */
+        }
+
+        .option:hover {
+            background-color: #0056b3;
+        }
+
+        .feedback {
+            margin: 10px 0;
+            font-weight: bold;
+            font-size: 18px; /* Increased font size */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Programming & HCI Quiz Game</h1>
+        <div id="quiz-container">
+            <div id="question"></div>
+            <div id="options"></div>
+            <div id="feedback" class="feedback"></div>
+            <button id="next-button" class="hidden">Next Question</button>
+        </div>
+        <div id="score-container" class="hidden">
+            <h2>Your Score: <span id="score"></span></h2>
+            <button id="restart-button">Restart Quiz</button>
+        </div>
+    </div>
+    <script>
+        const questions = [
+            {
+                question: "What does HTML stand for?",
+                options: ["Hyper Text Markup Language", "High Text Markup Language", "Hyper Tabular Markup Language", "None of these"],
+                answer: 0
+            },
+            {
+                question: "Which of the following is a programming language?",
+                options: ["HTML", "CSS", "JavaScript", "All of the above"],
+                answer: 2
+            },
+            {
+                question: "What is the main purpose of HCI?",
+                options: ["To improve user experience", "To create software", "To design hardware", "None of the above"],
+                answer: 0
+            },
+            {
+                question: "Which of the following is a front-end framework?",
+                options: ["Django", "Flask", "React", "Node.js"],
+                answer: 2
+            },
+            {
+                question: "What does CSS stand for?",
+                options: ["Cascading Style Sheets", "Creative Style Sheets", "Computer Style Sheets", "Colorful Style Sheets"],
+                answer: 0
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        const questionElement = document.getElementById('question');
+        const optionsElement = document.getElementById('options');
+        const feedbackElement = document.getElementById('feedback');
+        const nextButton = document.getElementById('next-button');
+        const scoreContainer = document.getElementById('score-container');
+        const scoreElement = document.getElementById('score');
+        const restartButton = document.getElementById('restart-button');
+
+        function startGame() {
+            currentQuestionIndex = 0;
+            score = 0;
+            nextButton.classList.add('hidden');
+            scoreContainer.classList.add('hidden');
+ feedbackElement.innerText = '';
+            showQuestion(questions[currentQuestionIndex]);
+        }
+
+        function showQuestion(question) {
+            questionElement.innerText = question.question;
+            optionsElement.innerHTML = '';
+            feedbackElement.innerText = '';
+            question.options.forEach((option, index) => {
+                const button = document.createElement('div');
+                button.innerText = option;
+                button.classList.add('option');
+                button.addEventListener('click', () => selectOption(index));
+                optionsElement.appendChild(button);
+            });
+        }
+
+        function selectOption(index) {
+            const question = questions[currentQuestionIndex];
+            if (index === question.answer) {
+                score++;
+                feedbackElement.innerText = "Correct!";
+            } else {
+                feedbackElement.innerText = "Wrong! The correct answer is: " + question.options[question.answer];
+            }
+            nextButton.classList.remove('hidden');
+        }
+
+        nextButton.addEventListener('click', () => {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < questions.length) {
+                showQuestion(questions[currentQuestionIndex]);
+                nextButton.classList.add('hidden');
+            } else {
+                showScore();
+            }
+        });
+
+        function showScore() {
+            scoreElement.innerText = score;
+            scoreContainer.classList.remove('hidden');
+            document.getElementById('quiz-container').classList.add('hidden');
+        }
+
+        restartButton.addEventListener('click', startGame);
+
+        startGame();
+    </script>
+</body>
+</html>
