@@ -5,29 +5,70 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Enrollment Form</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        /* Basic Styling */
+        html, body {
+            height: 100%; /* Set height to 100% */
             margin: 0;
-            padding: 20px;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light background for better readability */
+            color: #333; /* Dark text color */
+            display: flex; /* Use flexbox */
+            flex-direction: column; /* Arrange children in a column */
         }
+
+        header {
+            background: #2c3e50; /* Dark header */
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Navigation Styling */
+        nav {
+            background: #35424a;
+            display: flex;
+            justify-content: center; /* Centers the nav links horizontally */
+            align-items: center; /* Vertically center the links */
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background: #45a049; /* Green background on hover */
+        }
+
+        nav a.active {
+            background: #45a049; /* Highlight the active page link */
+        }
+
         .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
+            max-width: 800px; /* Limit the width of the form */
+            margin: 20px auto; /* Center the form */
+            background: #ffffff; /* White background for the form */
             padding: 20px;
             border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
         }
+
         h1 {
             text-align: center;
-            color: #333;
+            color: #F0F8FF; /* Dark color for the title */
         }
+
         label {
             display: block;
             margin: 10px 0 5px;
-            color: #555;
+            color: #555; /* Darker text for labels */
         }
+
         input[type="text"],
         input[type="date"],
         input[type="tel"],
@@ -41,24 +82,39 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
+
         button {
             width: 100%;
             padding: 10px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            background-color: #35424a; /* Button background color */
+            color: white; /* Button text color */
+            border: none; /* No border */
+            border-radius: 4px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
             font-size: 16px;
         }
+
         button:hover {
-            background-color: #218838;
+            background-color: #45a049; /* Change background on hover */
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1>Enrollment Form</h1>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="home_admin.html">Home</a>
+        <a href="view_course_admin.html">View Courses</a>
+        <a href="create_course_admin.html">Create Courses</a>
+        <a href="manage_admin.html">Manage Users</a>
+        <a href="setting_admin.html">Settings</a>
+        <a href="enrollment_form.html" class="active">Enrollment Form</a>
+    </nav>
+
+    <div class="container">
         <form action="#" method="post">
             <label for="name">Full Name:</label>
             <input type="text" id="name" name="name" required>
@@ -82,7 +138,7 @@
             <select id="course" name="course" required>
                 <option value="">Select Course</option>
                 <option value="computer_science">Computer Science</option>
-                <option value="information_technology">information technology</option>
+                <option value="information_technology">Information Technology</option>
                 <option value="computer_engineering">Computer Engineering</option>
                 <option value="business_administration">Business Administration</option>
                 <option value="psychology">Psychology</option>
