@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    <style>
+        /* Basic Styling */
+        html, body {
+            height: 100%; /* Set height to 100% */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light background for better readability */
+            color: #333; /* Dark text color */
+            display: flex; /* Use flexbox */
+            flex-direction: column; /* Arrange children in a column */
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+        }
+
+        body.dark-mode {
+            background-color: #121212; /* Dark background */
+            color: #ffffff; /* Light text color */
+        }
+
+        header {
+            background: #2c3e50; /* Dark header */
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        /* Login Button Styling */
+        .login-button {
+            position: absolute; /* Position it absolutely within the header */
+            top: 20px; /* Adjust as needed */
+            right: 20px; /* Adjust as needed */
+            background-color: #35424a; /* Button background color */
+            color: white; /* Button text color */
+            border: none; /* No border */
+            padding: 10px 15px; /* Padding for the button */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            width: auto; /* Set width to auto to fit content */
+        }
+
+        .login-button:hover {
+            background-color: #45a049; /* Change background on hover */
+        }
+
+        nav {
+            background: #35424a;
+            display: flex;
+            justify-content: center; /* Centers the nav links horizontally */
+            align-items: center; /* Vertically center the links */
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background: #45a049; /* Green background on hover */
+        }
+
+        nav a.active {
+            background: #45a049; /* Highlight the active page link */
+        }
+
+        footer {
+            background: #2c3e50; /* Dark footer */
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            margin-top: 20px; /* Added margin to create space above the footer */
+        }
+
+        main {
+            flex: 1; /* Allow main to grow and take available space */
+            padding: 20px;
+            display: flex;
+            justify-content: center; /* Center the containers */
+            gap: 20px; /* Space between containers */
+        }
+
+        .container {
+            background: #ffffff; /* White background for the container */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 800px; /* Set a fixed width for the container */
+            height: 300px;
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition */
+        }
+
+        body.dark-mode .container {
+            background: #1e1e1e; /* Dark background for the container in dark mode */
+            color: #ffffff; /* Light text color for content in dark mode */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px; /* Space above the table */
+	    table-layout: fixed;
+	    overflow: hidden;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer; /* Change cursor to pointer for editable cells */
+        }
+
+        th {
+            background-color: #35424a;
+            color: white;
+        }
+
+        td:hover {
+            background-color: #f1f1f1; /* Highlight cell on hover */
+        }
+
+        body.dark-mode th {
+            background-color: #2c3e50; /* Dark background for table header in dark mode */
+            color: white; /* Light text color for table header in dark mode */
+        }
+
+        body.dark-mode td {
+            background-color: #1e1e1e; /* Dark background for table cells in dark mode */
+            color: #ffffff; /* Light text color for table cells in dark mode */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Manage Users</h1>
+        <p>Here you can view and edit user information directly in the table.</p>
+        <button class="login-button" onclick="window.location.href='login.html'">Logout</button>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="view_course.html">View Courses</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="game.html">Games</a>
+        <a href="enrollment.html">Enrollment</a>
+        <a href="create_course.html">Create Courses</a>
+        <a href="manage.html" class="active">Manage Users</a>
+        <a href="setting.html">Settings</a>
+        <a href="lms_home.html">LMS</a>
+    </nav>
+    
+    <!-- Main Content Area -->
+    <main>
+        <div class="container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Password</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <tr>
+                        <td contenteditable="true">John Doe</td>
+                        <td contenteditable="true">john@example.com</td>
+                        <td contenteditable="true">Student</td>
+                        <td contenteditable="true">john123</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true">Jane Smith</td>
+                        <td contenteditable="true">jane@example.com</td>
+                        <td contenteditable="true">Instructor</td>
+                        <td contenteditable="true">jane123</td>
+                    </tr>
+                    <tr>
+                        <td contenteditable="true">Miguel Uy</td>
+                        <td contenteditable="true">miguel@example.com</td>
+                        <td contenteditable="true">Admin</td>
+                        <td contenteditable="true">miguel123</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 User Management System</p>
+    </footer>
+
+    <script>
+        // Load saved theme preference from local storage
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+        });
+
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.classList.toggle('dark-mode', newTheme === 'dark');
+            localStorage.setItem('theme', newTheme); // Save the theme preference
+        }
+
+        // Retrieve user information from localStorage
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (user) {
+            const isStudent = user.role === 'student';
+
+            if (isStudent) {
+                alert('Access denied: Students cannot manage users.');
+                window.location.href = 'home.html';
+            }
+        } else {
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

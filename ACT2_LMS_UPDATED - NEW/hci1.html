@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HCI Course</title>
+    <style>
+        /* Basic Styling */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light background for better readability */
+            color: #333; /* Dark text color */
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.dark-mode {
+            background-color: #121212; /* Dark background */
+            color: #ffffff; /* Light text color */
+        }
+
+        header {
+            background: #2c3e50; /* Dark header */
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 0;
+            position: relative; /* Position relative for absolute positioning of the button */
+        }
+
+        /* Login Button Styling */
+        .login-button {
+            position: absolute; /* Position it absolutely within the header */
+            top: 20px; /* Adjust as needed */
+            right: 20px; /* Adjust as needed */
+            background-color: #35424a; /* Button background color */
+            color: white; /* Button text color */
+            border: none; /* No border */
+            padding: 10px 15px; /* Padding for the button */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+            width: auto; /* Set width to auto to fit content */
+        }
+
+        .login-button:hover {
+            background-color: #45a049; /* Change background on hover */
+        }
+
+        nav {
+            background: #35424a; /* Dark navigation */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background: #45a049; /* Green background on hover */
+        }
+
+        footer {
+            background: #2c3e50; /* Dark footer */
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            margin-top: 0px;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-color: #f4f4f4; /* Default background for main */
+        }
+
+        body.dark-mode main {
+            background-color: #121212; /* Match body background in dark mode */
+        }
+
+        .course-description {
+            background: #ffffff; /* White background for the content container */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 600px;
+            text-align: center;
+        }
+
+        body.dark-mode .course-description {
+            background: #1e1e1e; /* Dark background for the content container in dark mode */
+            color: #ffffff; /* Light text color for content in dark mode */
+        }
+
+        button {
+            background: #35424a; /* Button background color */
+            color: white; /* Button text color */
+            border: none; /* No border */
+            padding: 10px 15px; /* Padding for the button */
+            cursor: pointer; /* Pointer cursor on hover */
+            border-radius: 5px; /* Rounded corners */
+            margin-top: 10px; /* Space above the button */
+        }
+
+        body.dark-mode button {
+            background: #45a049; /* Button background color in dark mode */
+        }
+
+        button:hover {
+            background: #45a049; /* Green background on hover */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>HCI Course</h1>
+        <p>Learn the basics of Human Computer Interaction and start styling your own web pages!</p>
+        <button class="login-button" onclick="window.location.href='login.html'">Logout</button>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="home.html">Home</a>
+        <a href="view_course.html">View Courses</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="game.html">Games</a>
+        <a href="enrollment.html">Enrollment</a>
+        <a href="create_course.html" class="create-course">Create Courses</a>
+        <a href="manage.html" class="manage-users">Manage Users</a>
+        <a href="setting.html">Settings</a>
+        <a href="lms_home.html">LMS</a>
+    </nav>
+    
+    <!-- Main Content Area -->
+    <main>
+        <div class="course-description">
+            <h2>Welcome to the HCI Course</h2>
+            <p>This course will cover the fundamentals of Human Computer Interaction, including elements, attributes, and how it is important.</p>
+            <br>
+            <h2>What is HCI?</h2>
+            <p>Human-Computer Interaction (HCI) is the study and design of the interaction between people and computers. It focuses on understanding how users interact with technology and aims to improve the usability, accessibility, and overall user experience of computer systems and applications. HCI combines principles from computer science, design, psychology, and social sciences to create user-friendly interfaces and enhance the effectiveness of technology in meeting human needs.</p>
+            <img src="hci1.png" alt="HCI Image" style="max-width: 100%; height: auto; margin-top: 10px;">
+            <br>
+            <hr size="3" color="darkgrey">
+            <p>HCI is inherently interdisciplinary, integrating knowledge from psychology, ergonomics, engineering, design, ethnography, sociology, and language to create systems that are not only functional but also enhance the overall user experience. By understanding the interplay between these fields, HCI practitioners can design technology that is more intuitive, accessible, and aligned with human needs and behaviors.</p>
+            <img src="hci2.png" alt="HCI Image" style="max-width: 100%; height: auto; margin-top: 10px;">
+ <br>
+            <hr size="3" color="darkgrey">
+            <p>Advancements in technologies such as eye tracking, speech recognition, IoT, cloud computing, and AR/VR significantly enhance Human-Computer Interaction by making it more intuitive, efficient, and engaging. These innovations facilitate seamless communication between users and devices, improve accessibility, and create immersive experiences, ultimately leading to a more user-centered approach in technology design. As HCI continues to evolve, these technologies will play a crucial role in shaping the future of how we interact with digital systems.</p>
+            <img src="hci3.png" alt="HCI Image" style="max-width: 100%; height: auto; margin-top: 10px;">
+            <br>
+            <hr size="3" color="darkgrey">
+            <p>The principles of Human-Computer Interaction (HCI) are essential guidelines that inform the design and evaluation of user interfaces. These principles emphasize usability, ensuring that systems are easy to learn and efficient to use. User-centered design is crucial, involving users throughout the development process to align technology with their needs and preferences. Consistency in design elements helps users predict interactions, while clear feedback provides timely information about their actions. Affordance in design suggests how users can interact with elements, enhancing intuitiveness. Accessibility ensures that systems are usable by individuals of diverse abilities, promoting inclusivity. Finally, error prevention and recovery mechanisms are vital for minimizing user mistakes and facilitating easy correction. By adhering to these principles, HCI aims to create effective, efficient, and enjoyable interactions between users and technology.</p>
+            <img src="hci4.png" alt="HCI Image" style="max-width: 100%; height: auto; margin-top: 10px;">
+            <br>
+            <hr size="3" color="darkgrey">
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 User Management System</p>
+    </footer>
+
+    <script>
+        // Load saved theme preference from local storage
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+        });
+
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.body.classList.toggle('dark-mode', newTheme === 'dark');
+            localStorage.setItem('theme', newTheme); // Save the theme preference
+        }
+    </script>
+</body>
+</html>

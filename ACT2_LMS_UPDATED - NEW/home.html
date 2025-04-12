@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management System - Home</title>
+    <style>
+        /* Basic Styling */
+        html, body {
+            height: 100%; /* Set height to 100% */
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4; /* Light background for better readability */
+            color: #333; /* Dark text color */
+            display: flex; /* Use flexbox */
+            flex-direction: column; /* Arrange children in a column */
+        }
+
+        body.dark-mode {
+            background-color: #121212; /* Dark background */
+            color: #ffffff; /* Light text color */
+        }
+
+        header {
+            background: #2c3e50; /* Dark header */
+            color: #ffffff;
+            text-align: center;
+            padding: 20px 0;
+            position: relative; /* Position relative for absolute positioning of the button */
+        }
+
+        /* Login Button Styling */
+        .login-button {
+            position: absolute; /* Position it absolutely within the header */
+            top: 20px; /* Adjust as needed */
+            right: 20px; /* Adjust as needed */
+            background-color: #35424a; /* Button background color */
+            color: white; /* Button text color */
+            border: none; /* No border */
+            padding: 10px 15px; /* Padding for the button */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer; /* Pointer cursor on hover */
+        }
+
+        .login-button:hover {
+            background-color: #45a049; /* Change background on hover */
+        }
+
+        /* Navigation Styling */
+        nav {
+            background: #35424a;
+            display: flex;
+            justify-content: center; /* Centers the nav links horizontally */
+            align-items: center; /* Vertically center the links */
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: white;
+            padding: 14px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        nav a:hover {
+            background: #45a049; /* Green background on hover */
+        }
+
+        nav a.active {
+            background: #45a049; /* Highlight the active page link */
+        }
+
+        footer {
+            background: #2c3e50; /* Dark footer */
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            width: 100%;
+            margin-top: 0px; /* Added margin to create space above the footer */
+        }
+
+        main {
+            flex: 1; /* Allow main to grow and take available space */
+            padding: 20px;
+            display: flex;
+            justify-content: center; /* Center the container */
+            background-color: #f4f4f4; /* Default background for main */
+        }
+
+        body.dark-mode main {
+            background-color: #121212; /* Match body background in dark mode */
+        }
+
+        .content-container {
+            background: #ffffff; /* White background for the content container */
+            color: #333; /* Dark text color for content */
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            max-width: 800px; /* Limit the width of the main content */
+            width: 100%; /* Full width for smaller screens */
+        }
+
+        body.dark-mode .content-container {
+            background: #1e1e1e; /* Dark background for the content container in dark mode */
+            color: #ffffff; /* Light text color for content in dark mode */
+        }
+
+        /* Heading Colors */
+        h2, h3 {
+            color: #35424a; /* Dark color for section titles */
+        }
+
+        body.dark-mode h2, 
+        body.dark-mode h3 {
+            color: #ffffff; /* Light color for headings in dark mode */
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>Home</h1>
+        <p>Welcome to Home, this where you can read the overview of this UMS.</p>
+        <button class="login-button" onclick="window.location.href='login.html'">Logout</button>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="home.html" class="active">Home</a>
+        <a href="view_course.html">View Courses</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="game.html">Games</a>
+        <a href="enrollment.html">Enrollment</a>
+        <a href="create_course.html" class="create-course">Create Courses</a>
+        <a href="manage.html" class="manage-users">Manage Users</a>
+        <a href="setting.html">Settings</a>
+        <a href="lms_home.html">LMS</a>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main>
+        <div class="content-container">
+            <h2>User Management System Overview</h2>
+            <p>This User Management System is designed to facilitate user management within a Learning Management System (LMS). It allows for tracking user login status and assigning permissions based on user roles.</p>
+            
+            <h3>Key Features:</h3>
+            <ul>
+                <li><strong>Home:</strong> The overview page provides a summary of the LMS features and functionalities.</li>
+                <li><strong>View Courses:</strong> Users can browse and view different courses available in the system.</li>
+                <li><strong>Gallery:</strong> Users can see the images about the Courses.</li>
+                <li><strong>Games:</strong> Users can browse and view different courses available in the system.</li>
+                <li><strong>Enrollment:</strong> Users can enroll themselves to the LMS.</li>
+                <li><strong>Create Courses:</strong> Instructors and Admins can create new courses for students to access and learn from.</li>
+                <li><strong>Manage Users:</strong> Page where admins can see the information of the users on the LMS and can change their role.</li>
+                <li><strong>Settings:</strong> Users can customize their page's appearance based on their preferences, such as theme and notification settings.</li>
+            </ul>
+
+            <h3>Role-Based Access:</h3>
+            <p>Access to features is determined by user roles:</p>
+            <ul>
+                <li><strong>Students:</strong> Cannot access the Create Courses and Manage Users.</li>
+                <li><strong>Instructors:</strong> Cannot access the Manage Users.</li>
+                <li><strong>Admins:</strong> Can access all the features.</li>
+            </ul>
+
+            <h3>How It Works:</h3>
+            <p>Users can register and log in to the system. The system checks for unique emails to prevent duplicate registrations. Once logged in, users can access features based on their assigned roles. Admins have the ability to manage all users, including changing roles and updating preferences.</p>
+
+            <p>Explore the various sections of our portal to learn more about managing users effectively in an LMS environment!</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2023 User Management System</p>
+    </footer>
+
+    <script>
+        // Load saved theme preference from local storage
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+            // If you have a theme selector, set its value
+            const themeSelector = document.getElementById('theme');
+            if (themeSelector) {
+                themeSelector.value = savedTheme;
+            }
+        });
+
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            const theme = document.getElementById('theme').value;
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            localStorage.setItem('theme', theme); // Save the theme preference
+        }
+
+        // Retrieve user information from localStorage
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (user) {
+            const userRole = user.role; // Get the user's role
+            const navLinks = document.querySelectorAll('nav a');
+
+            // Add click event listeners to navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    const href = link.getAttribute('href');
+
+                    // Check access based on user role
+                    if (userRole === 'student' && (href === 'create_course.html' || href === 'manage.html')) {
+                        event.preventDefault(); // Prevent navigation
+                        alert('Access denied: Students cannot access this page.');
+                    } else if (userRole === 'instructor' && href === 'manage.html') {
+                        event.preventDefault(); // Prevent navigation
+                        alert('Access denied: Instructors cannot access this page.');
+                    }
+                    // If the user is an admin, they can access all pages, so no need to prevent navigation
+                });
+            });
+        } else {
+            // Redirect to login if no user is found
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
