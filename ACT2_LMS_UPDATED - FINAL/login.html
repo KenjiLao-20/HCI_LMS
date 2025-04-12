@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management System - Login</title>
+    <style>
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        /* Basic Styling */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, #3a4750 0%, #303841 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 40px 0 30px;
+            position: relative;
+            border-bottom: 5px solid #45a049;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            max-width: 700px;
+            margin: 15px auto;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        main {
+            flex: 1;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+            background-color: #f8f9fa;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e0e0e0' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        body.dark-mode main {
+            background-color: #121212;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23303030' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .container {
+            background: #ffffff;
+            color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+            position: relative;
+            border-top: 5px solid #45a049;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        body.dark-mode .container {
+            background: #1e1e1e;
+            color: #ffffff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .main-content {
+            background: #ffffff;
+            color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 700px;
+            width: 100%;
+            position: relative;
+            border-top: 5px solid #45a049;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        body.dark-mode .main-content {
+            background: #1e1e1e;
+            color: #ffffff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Heading Colors */
+        h2, h3 {
+            color: #2c3e50;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: #45a049;
+        }
+
+        body.dark-mode h2, 
+        body.dark-mode h3 {
+            color: #ffffff;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        input, select {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            background-color: #fff;
+            color: #333;
+            transition: all 0.3s ease;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+
+        body.dark-mode input,
+        body.dark-mode select {
+            background-color: #2a2a2a;
+            color: #fff;
+            border-color: #444;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #45a049;
+            box-shadow: 0 0 0 3px rgba(69, 160, 73, 0.2);
+        }
+
+        button {
+            background-color: #45a049;
+            color: white;
+            border: none;
+            padding: 12px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            margin-top: 5px;
+            font-family: 'Poppins', Arial, sans-serif;
+        }
+
+        button:hover {
+            background-color: #3d8b41;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Smaller button styling */
+        p button {
+            background-color: transparent;
+            color: #45a049;
+            padding: 5px 10px;
+            border: 1px solid #45a049;
+            border-radius: 4px;
+            font-weight: 500;
+        }
+
+        p button:hover {
+            background-color: rgba(69, 160, 73, 0.1);
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        body.dark-mode p button {
+            color: #4caf50;
+            border-color: #4caf50;
+        }
+
+        body.dark-mode p button:hover {
+            background-color: rgba(76, 175, 80, 0.1);
+        }
+
+        /* Register/Change Password Sections */
+        .register-section, .change-password-section {
+            display: none;
+            border-top: 1px solid #ddd;
+            margin-top: 20px;
+            padding-top: 20px;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        body.dark-mode .register-section, 
+        body.dark-mode .change-password-section {
+            border-top-color: #444;
+        }
+
+        /* Lists Styling */
+        ul {
+            padding-left: 20px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        /* Footer Styling */
+        footer {
+            background: linear-gradient(135deg, #303841 0%, #3a4750 100%);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            width: 100%;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background-color: rgba(0, 0, 0, 0.3);
+            transform: rotate(15deg);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>User Management System</h1>
+        <p>Your gateway to managing user information in our Learning Management System.</p>
+        <button class="theme-toggle" onclick="toggleDarkMode()">🌓</button>
+    </header>
+
+    <!-- Main Content Area -->
+    <main>
+        <!-- Login Container -->
+        <div class="container">
+            <h2>Login User</h2>
+            <form id="loginUserForm">
+                <input type="text" id="name" placeholder="Full Name" required>
+                <input type="email" id="loginEmail" placeholder="Email" required>
+                <input type="password" id="loginPassword" placeholder="Password" required>
+                <select id="role" required>
+                    <option value="">Select Role</option>
+                    <option value="student">Student</option>
+                    <option value="instructor">Instructor</option>
+                    <option value="admin">Admin</option>
+                </select>
+                <button type="submit">Login</button>
+            </form>
+            <p>Don't have an account? <button id="createUserBtn">Create User</button></p>
+            <p><button id="forgotPasswordBtn">Forgot Password?</button></p>
+
+            <!-- Registration Section -->
+            <div class="register-section" id="registerSection">
+                <h2>Create User</h2>
+                <form id="createUserForm">
+                    <input type="text" id="registerName" placeholder="Full Name" required>
+                    <input type="email" id="registerEmail" placeholder="Email" required>
+                    <input type="password" id="registerPassword" placeholder="Password" required>
+                    <select id="registerRole" required>
+                        <option value="">Select Role</option>
+                        <option value="student">Student</option>
+                        <option value="instructor">Instructor</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                    <button type="submit">Create Account</button>
+                </form>
+            </div>
+
+            <!-- Change Password Section -->
+            <div class="change-password-section" id="changePasswordSection">
+                <h2>Change Password</h2>
+                <form id="changePasswordForm">
+                    <input type="email" id="changeEmail" placeholder="Enter your email" required>
+                    <input type="password" id="newPassword" placeholder="New Password" required>
+                    <button type="submit">Change Password</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- Main Content Container -->
+        <div class="main-content">
+            <h2>System Overview</h2>
+            <p>This User Management System is designed to facilitate user management within a Learning Management System (LMS). It allows for tracking user login status and assigning permissions based on user roles.</p>
+            
+            <h3>Key Features:</h3>
+            <ul>
+                <li><strong>Home:</strong> The overview page provides a summary of the LMS features and functionalities.</li>
+                <li><strong>View Courses:</strong> Users can browse and view different courses available in the system.</li>
+                <li><strong>Gallery:</strong> Users can see the images about the Courses.</li>
+                <li><strong>Games:</strong> Users can browse and view different courses available in the system.</li>
+                <li><strong>Enrollment:</strong> Users can enroll themselves to the LMS.</li>
+                <li><strong>Create Courses:</strong> Instructors and Admins can create new courses for students to access and learn from.</li>
+                <li><strong>Manage Users:</strong> Page where admins can see the information of the users on the LMS and can change their role.</li>
+                <li><strong>Settings:</strong> Users can customize their page's appearance based on their preferences, such as theme and notification settings.</li>
+            </ul>
+            
+            <h3>Role-Based Access Control:</h3>
+            <ul>
+                <li><strong>Students:</strong> Cannot access the Create Courses and Manage Users.</li>
+                <li><strong>Instructors:</strong> Cannot access the Manage Users.</li>
+                <li><strong>Admins:</strong> Can access all the features.</li>
+            </ul>
+
+            <h3>How It Works:</h3>
+            <p>Users can register and log in to the system. The system checks for unique emails to prevent duplicate registrations. Once logged in, users can access features based on their assigned roles. Admins have the ability to manage all users, including changing roles and updating preferences.</p>
+
+            <p>Explore the various sections of our portal to learn more about managing users effectively in an LMS environment!</p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 User Management System</p>
+    </footer>
+
+<script>
+    // Load saved theme preference from local storage
+    document.addEventListener('DOMContentLoaded', () => {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+    });
+
+    // Function to toggle dark mode
+    function toggleDarkMode() {
+        const currentTheme = document.body.classList.contains('dark-mode') ? 'dark' : 'light';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        document.body.classList.toggle('dark-mode', newTheme === 'dark');
+        localStorage.setItem('theme', newTheme); // Save the theme preference
+    }
+
+    // Example user data for demonstration
+    let users = [
+        {name: "John Doe", email: "john@example.com", role: "student", password: "john123" },
+        {name: "Jane Smith", email: "jane@example.com", role: "instructor", password: "jane123"},
+        {name: "Miguel Uy", email: "miguel@example.com", role: "admin", password: "miguel123"}
+    ];
+
+    // Login form handling
+    document.getElementById('loginUserForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const name = document.getElementById('name').value;
+        const email = document.getElementById('loginEmail').value;
+        const password = document.getElementById('loginPassword').value;
+        const role = document.getElementById('role').value;
+
+        // Check if the user exists and password matches
+        const user = users.find(user => user.email === email && user.password === password);
+
+        if (user) {
+            // Store user information in localStorage
+            localStorage.setItem('user', JSON.stringify({ name: user.name, email: user.email, role: user.role }));
+            
+            // Redirect based on user role
+            window.location.href = 'home.html'; // Redirect to home page
+        } else {
+            alert('Invalid email or password! Please try again.');
+        }
+    });
+
+    // Show registration section
+    document.getElementById('createUserBtn').addEventListener('click', function() {
+        const registerSection = document.getElementById('registerSection');
+        registerSection.style.display = registerSection.style.display === 'none' || registerSection.style.display === '' ? 'block' : 'none';
+    });
+
+    // Show change password section
+    document.getElementById('forgotPasswordBtn').addEventListener('click', function() {
+        const changePasswordSection = document.getElementById('changePasswordSection');
+        changePasswordSection.style.display = changePasswordSection.style.display === 'none' || changePasswordSection.style.display === '' ? 'block' : 'none';
+    });
+
+    // Create user form handling
+    document.getElementById('createUserForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const registerName = document.getElementById('registerName').value;
+        const registerEmail = document.getElementById('registerEmail').value;
+        const registerPassword = document.getElementById('registerPassword').value;
+        const registerRole = document.getElementById('registerRole').value;
+
+        // Check if the email already exists
+        const existingUser = users.find(user => user.email === registerEmail);
+        if (existingUser) {
+            alert('Email already exists! Please use a different email.');
+            return;
+        }
+
+        // Add new user to the users array
+        users.push({ name: registerName, email: registerEmail, role: registerRole, password: registerPassword });
+        alert('Account created successfully! You can now log in.');
+
+        // Clear the registration form
+        document.getElementById('createUserForm').reset();
+        document.getElementById('registerSection').style.display = 'none'; // Hide the registration section
+    });
+
+    // Handle change password form submission
+    document.getElementById('changePasswordForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const changeEmail = document.getElementById('changeEmail').value;
+        const newPassword = document.getElementById('newPassword').value;
+
+        // Here you would typically send a request to your server to handle the password change
+        const user = users.find(user => user.email === changeEmail);
+        if (user) {
+            user.password = newPassword; // Update the password
+            alert('Password changed successfully!');
+            document.getElementById('changePasswordSection').style.display = 'none'; // Hide the change password section
+        } else {
+            alert('Email not found! Please check and try again.');
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management System - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Import Google Fonts */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        /* Basic Styling */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', Arial, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+
+        /* Header Styling */
+        header {
+            background: linear-gradient(135deg, #3a4750 0%, #303841 100%);
+            color: #ffffff;
+            text-align: center;
+            padding: 40px 0 30px;
+            position: relative;
+            border-bottom: 5px solid #45a049;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        header p {
+            max-width: 700px;
+            margin: 15px auto;
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Login Button Styling */
+        .login-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background-color: #45a049;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .login-button:hover {
+            background-color: #3d8b41;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Navigation Styling */
+        nav {
+            background: #303841;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+            flex-wrap: wrap;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        nav a {
+            color: white;
+            padding: 16px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a:hover {
+            background: rgba(69, 160, 73, 0.8);
+        }
+
+        nav a.active {
+            background: #45a049;
+            font-weight: 600;
+        }
+
+        nav a.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: white;
+        }
+
+        nav a i {
+            margin-right: 8px;
+        }
+
+        footer {
+            background: linear-gradient(135deg, #303841 0%, #3a4750 100%);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            width: 100%;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            flex: 1;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            background-color: #f8f9fa;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23e0e0e0' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        body.dark-mode main {
+            background-color: #121212;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23303030' fill-opacity='0.4'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .content-container {
+            background: #ffffff;
+            color: #333;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            border-top: 5px solid #45a049;
+        }
+
+        body.dark-mode .content-container {
+            background: #1e1e1e;
+            color: #ffffff;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Heading Colors */
+        h2, h3 {
+            color: #2c3e50;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 80px;
+            height: 3px;
+            background-color: #45a049;
+        }
+
+        body.dark-mode h2, 
+        body.dark-mode h3 {
+            color: #ffffff;
+        }
+
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 25px;
+        }
+
+        .feature-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+            border-left: 4px solid #45a049;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode .feature-card {
+            background: #2a2a2a;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .feature-icon {
+            background-color: rgba(69, 160, 73, 0.15);
+            color: #45a049;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+
+        .feature-title {
+            font-weight: 600;
+            margin: 0;
+            font-size: 1.1rem;
+        }
+
+        .feature-description {
+            margin: 0;
+            line-height: 1.5;
+            color: #666;
+        }
+
+        body.dark-mode .feature-description {
+            color: #bbb;
+        }
+
+        /* Role Cards */
+        .role-section {
+            margin-top: 30px;
+        }
+
+        .role-cards {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .role-card {
+            flex: 1;
+            min-width: 200px;
+            background: linear-gradient(135deg, #f9f9f9 0%, #f0f0f0 100%);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+        }
+
+        body.dark-mode .role-card {
+            background: linear-gradient(135deg, #2a2a2a 0%, #252525 100%);
+        }
+
+        .role-card h4 {
+            margin-top: 0;
+            color: #45a049;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .role-card ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+
+        .role-card li {
+            margin-bottom: 5px;
+        }
+
+        /* Banner */
+        .banner {
+            background: linear-gradient(135deg, #3a4750 0%, #303841 100%);
+            margin: 30px -30px;
+            padding: 25px 30px;
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.1' fill-rule='evenodd'/%3E%3C/svg%3E");
+            opacity: 0.3;
+        }
+
+        .banner h3 {
+            color: white;
+            margin-top: 0;
+        }
+
+        .banner p {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .content-container {
+            animation: fadeIn 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>HCI Course</h1>
+        <p>Learn the basics of Human Computer Interaction and start styling your own web pages!</p>
+        <button class="login-button" onclick="window.location.href='login.html'">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </button>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <a href="home.html"><i class="fas fa-home"></i> Home</a>
+        <a href="view_course.html" class="active"><i class="fas fa-book"></i> Courses</a>
+        <a href="gallery.html"><i class="fas fa-images"></i> Gallery</a>
+        <a href="game.html"><i class="fas fa-gamepad"></i> Games</a>
+        <a href="enrollment.html"><i class="fas fa-user-plus"></i> Enrollment</a>
+        <a href="create_course.html" class="create-course"><i class="fas fa-plus-circle"></i> Create Courses</a>
+        <a href="manage.html" class="manage-users"><i class="fas fa-users-cog"></i> Manage Users</a>
+        <a href="setting.html"><i class="fas fa-cog"></i> Settings</a>
+        <a href="lms_home.html"><i class="fas fa-graduation-cap"></i> LMS</a>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main>
+        <div class="course-description">
+            <h2>Welcome to the HCI Course</h2>
+            <p>This course will cover the fundamentals of Human Computer Interaction, including elements, attributes, and how it is important.</p>
+            <br>
+            <h2>What is HCI?</h2>
+            <p>Human-Computer Interaction (HCI) is the study and design of the interaction between people and computers.</p>
+            <p>HCI is inherently interdisciplinary, integrating knowledge from psychology, ergonomics, engineering, design, ethnography, sociology, and language.</p>
+            <p>Advancements in technologies such as eye tracking, speech recognition, IoT, cloud computing, and AR/VR significantly enhance Human-Computer Interaction.</p>
+            <p>The principles of Human-Computer Interaction (HCI) are essential guidelines that inform the design and evaluation of user interfaces.</p>
+            <br>
+            <img src="hci1.png" alt="HCI Image" style="max-width: 100%; height: auto; margin-top: 10px;">             <img src="hci2.png" alt="HCI Image" style="max-width: 100%; height: auto; margin-top: 10px;"><br>
+            <img src="hci3.png" alt="HCI Image" style="max-width: 100%; height: auto; margin-top: 10px;">            <img src="hci4.png" alt="HCI Image" style="max-width: 100%; height: auto; margin-top: 10px;">
+        </div>
+    </main>
+
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 User Management System | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Load saved theme preference from local storage
+        document.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.body.classList.toggle('dark-mode', savedTheme === 'dark');
+            // If you have a theme selector, set its value
+            const themeSelector = document.getElementById('theme');
+            if (themeSelector) {
+                themeSelector.value = savedTheme;
+            }
+            
+            // Add icon to the login button
+            const loginBtn = document.querySelector('.login-button');
+            if (loginBtn && !loginBtn.querySelector('i')) {
+                loginBtn.innerHTML = '<i class="fas fa-sign-out-alt"></i> Logout';
+            }
+        });
+
+        // Function to toggle dark mode
+        function toggleDarkMode() {
+            const theme = document.getElementById('theme').value;
+            document.body.classList.toggle('dark-mode', theme === 'dark');
+            localStorage.setItem('theme', theme); // Save the theme preference
+        }
+
+        // Retrieve user information from localStorage
+        const user = JSON.parse(localStorage.getItem('user'));
+
+        if (user) {
+            const userRole = user.role; // Get the user's role
+            const navLinks = document.querySelectorAll('nav a');
+
+            // Add click event listeners to navigation links
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    const href = link.getAttribute('href');
+
+                    // Check access based on user role
+                    if (userRole === 'student' && (href === 'create_course.html' || href === 'manage.html')) {
+                        event.preventDefault(); // Prevent navigation
+                        alert('Access denied: Students cannot access this page.');
+                    } else if (userRole === 'instructor' && href === 'manage.html') {
+                        event.preventDefault(); // Prevent navigation
+                        alert('Access denied: Instructors cannot access this page.');
+                    }
+                    // If the user is an admin, they can access all pages, so no need to prevent navigation
+                });
+            });
+        } else {
+            // Redirect to login if no user is found
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>

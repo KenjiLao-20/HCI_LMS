@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LMS Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            background-color: #f4f4f4;
+            height: 100vh;
+            transition: background-color 0.3s, color 0.3s; /* Smooth transition for theme change */
+        }
+
+        body.dark-mode {
+            background-color: #121212; /* Dark background */
+            color: #ffffff; /* Light text color */
+        }
+
+        .container {
+            display: flex;
+            width: 100%;
+            flex-direction: column;
+            height: 100%; /* Ensure the container takes full height */
+        }
+
+        .main {
+            display: flex;
+            flex-grow: 1;
+            width: 100%; /* Full width */
+        }
+
+        .sidebar {
+            width: 250px; /* Fixed width for sidebar */
+            background-color: #2c3e50;
+            color: white;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+            flex-grow: 1;
+        }
+
+        .sidebar ul li {
+            padding: 15px;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #34495e;
+            transform: scale(1.05);
+        }
+
+        .content {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto; /* Allow vertical scrolling if content overflows */
+            background-color: #ecf0f1;
+            border-left: 1px solid #bdc3c7;
+            display: flex;
+            flex-direction: column;
+            min-height: 0; /* Prevent content from affecting the sidebar height */
+        }
+
+        .content-section {
+            display: none;
+            border-radius: 8px;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        h1 {
+            color: #2c3e50;
+        }
+
+        p {
+            color: #7f8c8d;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #2c3e50;
+            color: white;
+            margin-top: auto;
+        }
+
+        /* Dark mode styles */
+        body.dark-mode .sidebar {
+            background-color: #1a1a1a; /* Dark sidebar */
+        }
+
+        body.dark-mode .content {
+            background-color: #1e1e1e; /* Dark content area */
+        }
+
+        body.dark-mode .content-section {
+            background-color: #2a2a2a; /* Dark content section */
+            color: #ffffff; /* Light text color */
+        }
+
+        body.dark-mode h1 {
+            color: #ffffff; /* Change h1 color to white in dark mode */
+        }
+
+        /* Table styles */
+        table {
+            width: 100%; /* Full width */
+            border-collapse: collapse; /* Merge borders */
+            margin-top: 20px; /* Space above the table */
+	    table-layout: fixed;
+	    overflow: hidden;
+        }
+
+        th, td {
+            border: 1px solid #bdc3c7; /* Border for table cells */
+            padding: 10px; /* Padding inside cells */
+            text-align: left; /* Align text to the left */
+        }
+
+        th {
+            background-color: #2c3e50; /* Dark background for header */
+            color: white; /* White text for header */
+        }
+
+        tr:nth-child(even) {
+            background-color: #ecf0f1; /* Light background for even rows */
+        }
+
+        tr:nth-child(odd) {
+            background-color: #ffffff; /* White background for odd rows */
+        }
+
+        tr:hover {
+            background-color: #dcdcdc; /* Highlight row on hover */
+        }
+
+        /* Dark mode styles for the table */
+        body.dark-mode th {
+            background-color: #1a1a1a; /* Dark background for table header in dark mode */
+            color: #ffffff; /* Light text color for table header in dark mode */
+        }
+
+        body.dark-mode td {
+            background-color: #2a2a2a; /* Dark background for table cells in dark mode */
+            color: #ffffff; /* Light text color for table cells in dark mode */
+        }
+
+        /* Toggle switch styles */
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .toggle-label {
+            margin-right: 10px;
+            font-weight: bold;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 24px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 24px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 20px;
+            width: 20px;
+            left : 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #2196F3;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .course-form {
+            background: #ffffff; /* White background for the form */
+            padding: 20px; /* Increased padding */
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            width: 400px; /* Fixed width for the form */
+            text-align: left; /* Align text to the left */
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+
+        body.dark-mode .course-form {
+            background: #1e1e1e; /* Dark background for the form in dark mode */
+            color: #ffffff; /* Light text color for form in dark mode */
+        }
+
+        label {
+            margin-top: 10px; /* Space above labels */
+            display: block; /* Make labels block elements */
+        }
+
+        body.dark-mode label {
+            color: #ffffff; /* Light color for labels in dark mode */
+        }
+
+        input[type="text"], textarea {
+            width: 100%; /* Full width for inputs */
+            padding: 10px; /* Padding for inputs */
+            margin: 10px 0; /* Space between inputs */
+            border: 1px solid #ccc; /* Border for inputs */
+            border-radius: 5px; /* Rounded corners */
+            box-sizing: border-box; /* Include padding in width calculation */
+        }
+
+        body.dark-mode input[type="text"],
+        body.dark-mode textarea {
+            background-color: #35424a; /* Dark background for inputs in dark mode */
+            color: #ffffff; /* Light text color for inputs in dark mode */
+            border: 1px solid #666; /* Darker border for inputs in dark mode */
+        }
+
+        button {
+            background: #35424a; /* Button background color */
+            color: white;
+            border: none;
+            padding: 10px 15px; /* Padding for the button */
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px; /* Space above the button */
+            width: 100%; /* Full width for button */
+        }
+
+        body.dark-mode button {
+            background-color: #45a049; /* Button background color in dark mode */
+        }
+
+        button:hover {
+            background: #45a049; /* Green background on hover */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="main">
+            <aside class="sidebar">
+                <h2>LMS Dashboard</h2>
+                <ul>
+                    <li onclick="showContent('dashboard')">Dashboard</li>
+                    <li onclick="showContent('programmingLessons')">Programming Lessons</li>
+                    <li onclick="showContent('addCourse')">Add Course</li>
+                    <li onclick="showContent('settings')">Settings</li>
+                    <li onclick="showContent('accountLibrary')">Account Library</li>
+                    <li onclick="logout()">Logout</li>
+                </ul>
+            </aside>
+            <main class="content">
+                <div id="dashboard" class="content-section active">
+                    <h1>Welcome to the LMS Dashboard</h1>
+                    <p id="userName">Name: </p>
+                    <p id="userEmail">Email: </p>
+                    <p id="userRole">Role: </p>
+                    <p id="lastLogin">Last Login: </p>
+                </div>
+                <div id="programmingLessons" class="content-section">
+                    <h1>Programming Lessons</h1>
+                    <p>Here you can find various programming lessons:</p>
+                    <ul>
+                        <li>
+                            <strong>HTML</strong>: Learn the basics of HTML, the standard markup language for creating web pages.<br><br>
+                            Hypertext Markup Language (HTML) is the standard markup language for documents designed to be displayed in a web browser. It defines the content and structure of web content. It is often assisted by technologies such as Cascading Style Sheets (CSS) and scripting languages such as JavaScript, a programming language.<br><br>
+                            Web browsers receive HTML documents from a web server or from local storage and render the documents into multimedia web pages. HTML describes the structure of a web page semantically and originally included cues for its appearance.<br><br>
+                            HTML elements are the building blocks of HTML pages. With HTML constructs, images and other objects such as interactive forms may be embedded into the rendered page. HTML provides a means to create structured documents by denoting structural semantics for text such as headings, paragraphs, lists, links, quotes, and other items. HTML elements are delineated by tags, written using angle brackets. Tags such as img and input directly introduce content into the page. Other tags such as p and /p surround and provide information about document text and may include sub-element tags. Browsers do not display the HTML tags but use them to interpret the content of the page.<br><br>
+                        </li>
+                        <li>
+                            <strong>CSS</strong>: Learn the basics of CSS, Discover how to style your web pages with CSS, the language used for describing the presentation of a document.<br><br>
+                            Cascading Style Sheets (CSS) is a style sheet language used for specifying the presentation and styling of a document written in a markup language such as HTML or XML (including XML dialects such as SVG, MathML or XHTML). CSS is a cornerstone technology of the World Wide Web, alongside HTML and JavaScript.<br><br>
+                            CSS is designed to enable the separation of content and presentation, including layout, colors, and fonts. This separation can improve content accessibility, since the content can be written without concern for its presentation; provide more flexibility and control in the specification of presentation characteristics; enable multiple web pages to share formatting by specifying the relevant CSS in a separate .css file, which reduces complexity and repetition in the structural content; and enable the .css file to be cached to improve the page load speed between the pages that share the file and its formatting.<br><br>
+                            Separation of formatting and content also makes it feasible to present the same markup page in different styles for different rendering methods, such as on-screen, in print, by voice (via speech-based browser or screen reader), and on Braille-based tactile devices. CSS also has rules for alternative formatting if the content is accessed on a mobile device.<br><br>
+                        </li>
+                        <li>
+                            <strong>Java</strong>: Understand the fundamentals of Java, a versatile programming language used for building applications.<br>
+                            Java is a high-level, general-purpose, memory-safe, object-oriented programming language. It is intended to let programmers write once, run anywhere (WORA), meaning that compiled Java code can run on all platforms that support Java without the need to recompile. Java applications are typically compiled to bytecode that can run on any Java virtual machine (JVM) regardless of the underlying computer architecture. The syntax of Java is similar to C and C++, but has fewer low-level facilities than either of them. The Java runtime provides dynamic capabilities (such as reflection and runtime code modification) that are typically not available in traditional compiled languages.<br><br>
+                            Java gained popularity shortly after its release, and has been a popular programming language since then. Java was the third most popular programming language in 2022 according to GitHub. Although still widely popular, there has been a gradual decline in use of Java in recent years with other languages using JVM gaining popularity.<br><br>
+                            Java was designed by James Gosling at Sun Microsystems. It was released in May 1995 as a core component of Sun's Java platform. The original and reference implementation Java compilers, virtual machines, and class libraries were released by Sun under proprietary licenses. As of May 2007, in compliance with the specifications of the Java Community Process, Sun had relicensed most of its Java technologies under the GPL-2.0-only license. Oracle, which bought Sun in 2010, offers its own HotSpot Java Virtual Machine. However, the official reference implementation is the OpenJDK JVM, which is open-source software used by most developers and is the default JVM for almost all Linux distributions.<br><br>
+                        </li>
+                        <li>
+                            <strong>Python</strong>: Explore Python, a powerful programming language known for its readability and versatility in various applications.<br>
+                            Python is a high-level, general-purpose programming language. Its design philosophy emphasizes code readability with the use of significant indentation.<br><br>
+                            Python is dynamically type-checked and garbage-collected. It supports multiple programming paradigms, including structured (particularly procedural), object-oriented and functional programming. It is often described as a "batteries included" language due to its comprehensive standard library.<br><br>
+                            Guido van Rossum began working on Python in the late 1980s as a successor to the ABC programming language and first released it in 1991 as Python 0.9.0. Python 2.0 was released in 2000. Python 3.0, released in 2008, was a major revision not completely backward-compatible with earlier versions. Python 2.7.18, released in 2020, was the last release of Python 2.<br><br>
+                        </li>
+                    </ul>
+                </div>
+                <div id="addCourse" class="content-section">
+                    <h1>Add Course </h1>
+                    <p>Fill in the details below to create a new course.</p>
+                    <div class="course-form">
+                        <label for="courseTitle">Course Title:</label>
+                        <input type="text" id="courseTitle" placeholder="Enter course title" required>
+                        <label for="courseDescription">Course Description:</label>
+                        <textarea id="courseDescription" rows="25" placeholder="Enter course description" required></textarea>
+                        <button onclick="createCourse()">Create Course</button>
+                    </div>
+                </div>
+                <div id="settings" class="content-section">
+                    <h1>Settings</h1>
+                    <p>Manage your account settings here.</p>
+                    <div class="toggle-container">
+                        <span class="toggle-label">Dark Mode:</span>
+                        <label class="toggle-switch">
+                            <input type="checkbox" id="darkModeToggle" onchange="toggleDarkMode()">
+                            <span class="slider"></span>
+                        </label>
+                    </div>
+                </div>
+                <div id="accountLibrary" class="content-section">
+                    <h1>Account Library</h1>
+                    <p>Your saved courses and materials will be listed here.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Email</th>
+                                <th>Role</th>
+                                <th>Password</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTableBody">
+                            <tr>
+                                <td contenteditable="true">John Doe</td>
+                                <td contenteditable="true">john@example.com</td>
+                                <td contenteditable="true">Student</td>
+                                <td contenteditable="true">john123</td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true">Jane Smith</td>
+                                <td contenteditable="true">jane@example.com</td>
+                                <td contenteditable="true">Instructor</td>
+                                <td contenteditable="true">jane123</td>
+                            </tr>
+                            <tr>
+                                <td contenteditable="true">Miguel Uy</td>
+                                <td contenteditable="true">miguel@example.com</td>
+                                <td contenteditable="true">Admin</td>
+                                <td contenteditable="true">miguel123</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </main>
+        </div>
+        <div class="footer">
+            &copy; 2023 LMS Dashboard. All rights reserved.
+        </div>
+    </div>
+    <script>
+        function showContent(sectionId) {
+            const sections = document.querySelectorAll('.content-section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            const activeSection = document.getElementById(sectionId);
+            activeSection.classList.add('active');
+        }
+
+        function logout() {
+
+            // Redirect to home.html
+            window.location.href = "home.html";
+        }
+
+        function toggleDarkMode() {
+            const body = document.body;
+            body.classList.toggle('dark-mode');
+        }
+
+        function createCourse() {
+            const title = document.getElementById('courseTitle').value;
+            const description = document.getElementById('courseDescription').value;
+
+            if (title && description) {
+                alert("Course Created: " + title + "\nDescription: " + description);
+                // Here you can add code to send the course data to a server or save it locally
+                // For example: saveCourseToDatabase(title, description);
+            } else {
+                alert("Please fill in all fields.");
+            }
+        }
+
+        // Load user data from localStorage
+        window.onload = function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                document.getElementById('userName').innerText = "Name: " + user.name;
+                document.getElementById('userEmail').innerText = "Email: " + user.email;
+                document.getElementById('userRole').innerText = "Role: " + user.role;
+                document.getElementById('lastLogin').innerText = "Last Login: " + new Date().toLocaleString();
+            } else {
+                alert("No user is logged in. Please log in.");
+                window.location.href = "login.html"; // Redirect to login page if no user is found
+            }
+        };
+    </script>
+</body>
+</html>
